@@ -1,0 +1,21 @@
+.navbar {
+  background-color: grey;
+  padding: 5px;
+}
+
+.main {
+  max-width: 90%;
+  margin: auto;
+  text-align: center;
+}
+
+.item-box {
+  height: 10px;
+  width: 70%;
+  padding: 10px;
+  margin: 10px;
+}
+
+.checkbox {
+  margin-left: 5em;
+}
