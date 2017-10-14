@@ -1,5 +1,11 @@
 import * as todoActions from './TodoActions';
-import nock from 'nock'
+import moxios from 'moxios'
+import thunk from 'redux-thunk';
+import configureMockStore from 'redux-mock-store';
+
+const middleware = [thunk];
+const mockStore = configureMockStore(middleware);
+
 
 // test async actions
 describe('Todo Actions', () => {
@@ -34,10 +40,64 @@ describe('Todo Actions', () => {
 
     expect(action).toEqual(expectedAction);
   });
+});
 
-  it('It creates a get success', () => {
-    nock('http://example.com/')
-      .get('/todos')
-      .reply(200, { body: { todo: ['number of todos'] } } )
+
+describe('Async action', () => {
+  beforeEach(function () {
+    // import and pass your custom axios instance to this method
+    moxios.install()
+  })
+
+  afterEach(function () {
+    // import and pass your custom axios instance to this method
+    moxios.uninstall()
+  })
+
+  it("should get todos", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status : 200,
+        response: {id: 1, title: 'title', status: true},
+      });
+    });
+    const expectedActions = {
+      type:"GET_TODO_SUCCESS",
+      todo: {
+        id: 1,
+        title: 'title',
+        status: true
+      }
+    };
+    const store = mockStore({});
+    return store.dispatch(todoActions.getTodo()).then(() => {
+      const actions = store.getActions();
+      expect(actions[0]).toEqual(expectedActions);
+    });
+  });
+
+  it("should add todos", () => {
+    const requestData = {id: 2, title: 'title', status: true};
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status : 200,
+        response: {id: 2, title: 'title', status: true},
+      });
+    });
+    const expectedActions = {
+      type:"ADD_TODO_SUCCESS",
+      todo: {
+        id: 2,
+        title: 'title',
+        status: true
+      }
+    };
+    const store = mockStore({});
+    return store.dispatch(todoActions.addTodo(requestData)).then(() => {
+      const actions = store.getActions();
+      expect(actions[0]).toEqual(expectedActions);
+    });
   });
 });
