@@ -6,9 +6,6 @@ import Navbar from './Navbar.js';
 
 describe('This are navbar tests', () => {
   it('renders without crashing', () => { 
-    const wrapper = shallow(<Navbar />); 
-    const header = <h2>Todo</h2>
-
-    expect(wrapper.contains(header)).toEqual(true);
+    const wrapper = shallow(<Navbar />);
   });
 });
