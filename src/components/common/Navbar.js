@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
+import {Navbar, NavItem} from 'react-materialize';
 
 
-class Navbar extends Component {
+class NavbarHeader extends Component {
   render() {
     return (
-      <div className="navbar">
-        <h2>Todo</h2>
-      </div>
+      <Navbar brand='Todo App' right></Navbar>
     )
   }
 }
 
-export default Navbar;
+export default NavbarHeader;
