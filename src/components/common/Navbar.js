@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import {Navbar, NavItem} from 'react-materialize';
 
 
 class NavbarHeader extends Component {
   render() {
     return (
-      <Navbar brand='Todo App' right></Navbar>
+      <div className="navbar">
+        <h2>Todo</h2>
+      </div>
     )
   }
 }
